@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
@@ -226,6 +227,8 @@ public class XSmart<T> {
         XRequstBody requstBody = new XRequstBody();
         requstBody.setMethod(method);
         requstBody.setParams(object != null ? object : new Object());
+        TypeUtils.compatibleWithJavaBean =true;// 保证fastjson传递数据时保持原大小写的设置(解决全大写)
+        TypeUtils.compatibleWithFieldName = true;// 保证fastjson传递数据时保持原大小写的设置(解决首字母大小)
         return JSON.toJSONString(requstBody);
     }
 

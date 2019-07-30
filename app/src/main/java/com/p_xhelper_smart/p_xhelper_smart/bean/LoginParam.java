@@ -1,7 +1,5 @@
 package com.p_xhelper_smart.p_xhelper_smart.bean;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.io.Serializable;
 
 /*
@@ -25,7 +23,7 @@ public class LoginParam implements Serializable {
         Password = password;
     }
 
-    @JSONField(name = "UserName") // 一定要加, 否则fastjson自动转为全小写
+    //@JSONField(name = "UserName") // 一定要加, 否则fastjson自动转为全小写
     public String getUserName() {
         return UserName;
     }
@@ -34,7 +32,7 @@ public class LoginParam implements Serializable {
         this.UserName = UserName;
     }
 
-    @JSONField(name = "Password")// 一定要加, 否则fastjson自动转为全小写
+    //@JSONField(name = "Password")// 一定要加, 否则fastjson自动转为全小写
     public String getPassword() {
         return Password;
     }
