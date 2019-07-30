@@ -17,6 +17,15 @@ public class ChangePasswordParam implements Serializable {
     private String CurrPassword;
     private String NewPassword;
 
+    public ChangePasswordParam() {
+    }
+
+    public ChangePasswordParam(String userName, String currPassword, String newPassword) {
+        UserName = userName;
+        CurrPassword = currPassword;
+        NewPassword = newPassword;
+    }
+
     public String getUserName() {
         return UserName;
     }

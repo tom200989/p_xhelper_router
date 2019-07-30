@@ -44,9 +44,6 @@ public class Cons {
     public static String METHOD_GET_LOGIN_STATE = "GetLoginState";
     public static String METHOD_CHANGE_PASSWORD = "ChangePassword";
     public static String METHOD_HEART_BEAT = "HeartBeat";
-    public static String METHOD_SET_PASSWORD_CHANGE_FLAG = "SetPasswordChangeFlag";
-    public static String METHOD_GET_PASSWORD_CHANGE_FLAG = "GetPasswordChangeFlag";
-    public static String METHOD_GET_CURRENT_LANGUAGE = "GetCurrentLanguage";
     public static String METHOD_GET_SMS_STORAGE_STATE = "GetSMSStorageState";
     public static String METHOD_SEARCH_NETWORK_RESULT = "SearchNetworkResult";
     public static String METHOD_GET_NETWORK_REGISTER_STATE = "GetNetworkRegisterState";
@@ -55,9 +52,6 @@ public class Cons {
     public static String METHOD_UNLOCK_PUK = "UnlockPuk";
     public static String METHOD_CHANGE_PIN_CODE = "ChangePinCode";
     public static String METHOD_CHANGE_PIN_STATE = "ChangePinState";
-    public static String METHOD_GET_AUTO_VALIDATE_PIN_STATE = "GetAutoValidatePinState";
-    public static String METHOD_SET_AUTO_VALIDATE_PIN_STATE = "SetAutoValidatePinState";
-    public static String METHOD_UNLOCK_SIMLOCK = "UnlockSimlock";
     public static String METHOD_GET_CONNECTION_STATE = "GetConnectionState";
     public static String METHOD_CONNECT = "Connect";
     public static String METHOD_DISCONNECT = "DisConnect";
@@ -124,5 +118,7 @@ public class Cons {
     public static String METHOD_CONNECT_HOTSPOT = "ConnectHotspot";
     public static String METHOD_GET_CONNECT_HOTSPOT_STATE = "GetConnectHotspotState";
     public static String METHOD_DISCONNECT_HOTSPOT = "DisConnectHotspot";
+    // 固定的用户名
+    public static String ACCOUNT = "admin";
 
 }

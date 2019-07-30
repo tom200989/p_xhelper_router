@@ -19,7 +19,7 @@ import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
 @SuppressWarnings("unchecked")
 public class LoginHelper extends BaseHelper {
 
-    private String account;
+    private String account = Cons.ACCOUNT;
     private String password;
     private int count = 0;
     private int devType;// 设备类型
