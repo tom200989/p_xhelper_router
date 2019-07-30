@@ -1,6 +1,6 @@
 package com.p_xhelper_smart.p_xhelper_smart.helper;
 
-import com.p_xhelper_smart.p_xhelper_smart.bean.SystemInfoBean;
+import com.p_xhelper_smart.p_xhelper_smart.bean.GetSystemInfoBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
@@ -16,11 +16,11 @@ public class GetSystemInfoHelper extends BaseHelper {
      */
     public void getSystemInfo() {
         prepareHelperNext();
-        XSmart<SystemInfoBean> xsmart = new XSmart<>();
-        xsmart.xMethod(Cons.METHOD_GET_SYSTEM_INFO).xPost(new XNormalCallback<SystemInfoBean>() {
+        XSmart<GetSystemInfoBean> xsmart = new XSmart<>();
+        xsmart.xMethod(Cons.METHOD_GET_SYSTEM_INFO).xPost(new XNormalCallback<GetSystemInfoBean>() {
             @Override
-            public void success(SystemInfoBean systemInfoBean) {
-                getSystemInfoSuccessNext(systemInfoBean);
+            public void success(GetSystemInfoBean getSystemInfoBean) {
+                getSystemInfoSuccessNext(getSystemInfoBean);
             }
 
             @Override
@@ -44,7 +44,7 @@ public class GetSystemInfoHelper extends BaseHelper {
 
     // Inteerface--> 接口OnGetSystemInfoSuccessListener
     public interface OnGetSystemInfoSuccessListener {
-        void getSystemInfoSuccess(SystemInfoBean systemInfobean);
+        void getSystemInfoSuccess(GetSystemInfoBean getSystemInfobean);
     }
 
     // 对外方式setOnGetSystemInfoSuccessListener
@@ -53,9 +53,9 @@ public class GetSystemInfoHelper extends BaseHelper {
     }
 
     // 封装方法getSystemInfoSuccessNext
-    private void getSystemInfoSuccessNext(SystemInfoBean systemInfobean) {
+    private void getSystemInfoSuccessNext(GetSystemInfoBean getSystemInfobean) {
         if (onGetSystemInfoSuccessListener != null) {
-            onGetSystemInfoSuccessListener.getSystemInfoSuccess(systemInfobean);
+            onGetSystemInfoSuccessListener.getSystemInfoSuccess(getSystemInfobean);
         }
     }
 

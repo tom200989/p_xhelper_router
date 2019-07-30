@@ -34,7 +34,7 @@ public abstract class XNormalCallback<T> extends XNormalListener<XResponceBody<T
 
     @Override
     public void onNext(XResponceBody<T> xResponceBody) {
-        FwError fwError = xResponceBody.getFwError();
+        FwError fwError = xResponceBody.getError();
         if (fwError != null) {
             fwError(fwError);
         } else {
@@ -42,10 +42,16 @@ public abstract class XNormalCallback<T> extends XNormalListener<XResponceBody<T
             JSONObject object = (JSONObject) xResponceBody.getResult();
             // 2.需要将JSONObject转换成字符
             String result = JSON.toJSONString(object);
-            // 3.然后把callback需要外传的泛型进行类型指定
-            T t = toBean(result, this);
-            // 4.最后回调
-            success(t);
+            // 3.区分空响应
+            if (result.equals("{}")) {
+                // 3.回调null
+                success(null);
+            } else {
+                // 3.然后把callback需要外传的泛型进行类型指定
+                T t = toBean(result, this);
+                // 4.最后回调
+                success(t);
+            }
         }
     }
 

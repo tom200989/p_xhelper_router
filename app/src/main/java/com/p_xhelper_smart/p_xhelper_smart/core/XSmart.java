@@ -146,7 +146,7 @@ public class XSmart<T> {
                 public void onSuccess(String result) {
                     // 打印日志
                     XResponceBody xResponceBody = toBean(result, callback);
-                    FwError fwError = xResponceBody.getFwError();
+                    FwError fwError = xResponceBody.getError();
                     if (fwError != null) {
                         printFwError(fwError.getCode(), fwError.getMessage());
                     } else {

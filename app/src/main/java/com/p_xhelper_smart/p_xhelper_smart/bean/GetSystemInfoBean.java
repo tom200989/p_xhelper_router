@@ -5,7 +5,7 @@ import java.io.Serializable;
 /*
  * Created by qianli.ma on 2019/7/29 0029.
  */
-public class SystemInfoBean implements Serializable {
+public class GetSystemInfoBean implements Serializable {
 
     /**
      * SwVersion : HH70_IA_02.00_10
@@ -41,7 +41,7 @@ public class SystemInfoBean implements Serializable {
     private String SwVersionMain;// 主板软件版本
     private String MacAddress5G;// 5G MAC地址
 
-    public SystemInfoBean() {
+    public GetSystemInfoBean() {
     }
 
     public String getSwVersion() {
@@ -162,5 +162,27 @@ public class SystemInfoBean implements Serializable {
 
     public void setMacAddress5G(String MacAddress5G) {
         this.MacAddress5G = MacAddress5G;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("GetSystemInfoBean{");
+        sb.append("\n").append("\t").append("SwVersion ='").append(SwVersion).append('\'');
+        sb.append("\n").append("\t").append("HwVersion ='").append(HwVersion).append('\'');
+        sb.append("\n").append("\t").append("WebUiVersion ='").append(WebUiVersion).append('\'');
+        sb.append("\n").append("\t").append("HttpApiVersion ='").append(HttpApiVersion).append('\'');
+        sb.append("\n").append("\t").append("AppVersion ='").append(AppVersion).append('\'');
+        sb.append("\n").append("\t").append("DeviceName ='").append(DeviceName).append('\'');
+        sb.append("\n").append("\t").append("IMEI ='").append(IMEI).append('\'');
+        sb.append("\n").append("\t").append("sn ='").append(sn).append('\'');
+        sb.append("\n").append("\t").append("MacAddress ='").append(MacAddress).append('\'');
+        sb.append("\n").append("\t").append("IMSI ='").append(IMSI).append('\'');
+        sb.append("\n").append("\t").append("ICCID ='").append(ICCID).append('\'');
+        sb.append("\n").append("\t").append("MsisdnMark =").append(MsisdnMark);
+        sb.append("\n").append("\t").append("MSISDN ='").append(MSISDN).append('\'');
+        sb.append("\n").append("\t").append("SwVersionMain ='").append(SwVersionMain).append('\'');
+        sb.append("\n").append("\t").append("MacAddress5G ='").append(MacAddress5G).append('\'');
+        sb.append("\n}");
+        return sb.toString();
     }
 }

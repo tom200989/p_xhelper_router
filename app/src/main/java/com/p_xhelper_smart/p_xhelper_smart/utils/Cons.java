@@ -125,9 +125,4 @@ public class Cons {
     public static String METHOD_GET_CONNECT_HOTSPOT_STATE = "GetConnectHotspotState";
     public static String METHOD_DISCONNECT_HOTSPOT = "DisConnectHotspot";
 
-    public static int CONS_PWENCRYPT_ON = 1;// 需加密状态
-    public static int CONS_PWENCRYPT_OFF = 0;// 无需加密状态
-    public static int CONS_LOGOUT = 0;// 登出
-    public static int CONS_LOGIN = 1;// 登陆
-    public static int CONS_LOGIN_TIME_USER_OUT = 2;// 登陆次数用尽
 }

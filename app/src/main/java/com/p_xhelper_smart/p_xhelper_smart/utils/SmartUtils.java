@@ -16,6 +16,8 @@ public class SmartUtils {
      * @return -1:未知设备; 0:老设备; 1:新设备
      */
     public static int getDEVType(String deviceName) {
+        // 先最小化
+        deviceName = deviceName.toLowerCase();
         // 老设备
         for (String dev : Cons.LIST_DEV_2017) {
             if (deviceName.contains(dev) || dev.contains(deviceName)) {

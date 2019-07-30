@@ -1,14 +1,16 @@
 package com.p_xhelper_smart.p_xhelper_smart.helper;
 
 import com.p_encrypt.p_encrypt.core.md5.Md5Code;
+import com.p_xhelper_smart.p_xhelper_smart.bean.GetLoginStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.bean.LoginBean;
 import com.p_xhelper_smart.p_xhelper_smart.bean.LoginParam;
-import com.p_xhelper_smart.p_xhelper_smart.bean.SystemInfoBean;
+import com.p_xhelper_smart.p_xhelper_smart.bean.GetSystemInfoBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
 import com.p_xhelper_smart.p_xhelper_smart.utils.EncryptUtils;
+import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
 
 /*
@@ -21,7 +23,7 @@ public class LoginHelper extends BaseHelper {
     private String password;
     private int count = 0;
     private int devType;// 设备类型
-    private SystemInfoBean systemInfoBean;
+    private GetSystemInfoBean getSystemInfoBean;
 
     /**
      * 登陆
@@ -43,11 +45,11 @@ public class LoginHelper extends BaseHelper {
      * 判断是否为E1版本
      */
     private void is_DEV_E1() {
-        GetSystemInfoHelper xSystemHelper = new GetSystemInfoHelper();
-        xSystemHelper.setOnGetSystemInfoSuccessListener(systemInfobean -> {
+        GetSystemInfoHelper systemInfoHelper = new GetSystemInfoHelper();
+        systemInfoHelper.setOnGetSystemInfoSuccessListener(getSystemInfobean -> {
             // 0.提交本地变量
-            this.systemInfoBean = systemInfobean;
-            devType = SmartUtils.getDEVType(systemInfobean.getDeviceName());
+            this.getSystemInfoBean = getSystemInfobean;
+            devType = SmartUtils.getDEVType(getSystemInfobean.getDeviceName());
             // 1.判断是否为E1版本
             if (devType == Cons.DEV_TARGET) {
                 // 1.1.E1版本必须加密
@@ -58,12 +60,18 @@ public class LoginHelper extends BaseHelper {
             }
         });
 
-        xSystemHelper.setOnFwErrorListener(() -> {
+        systemInfoHelper.setOnFwErrorListener(() -> {
             // 1.3.如果获取出错 -- 则一定是需要加密的版本
             encryptAccAndPsd(true);
         });
-        xSystemHelper.setOnAppErrorListener(this::loginFailedNext);
-        xSystemHelper.getSystemInfo();
+
+        systemInfoHelper.setOnAppErrorListener(() -> {
+            Logg.t(Cons.TAG).ee("systemInfoHelper app error");
+            loginFailedNext();
+            doneHelperNext();
+        });
+
+        systemInfoHelper.getSystemInfo();
     }
 
     /**
@@ -73,13 +81,19 @@ public class LoginHelper extends BaseHelper {
         GetLoginStateHelper loginStateHelper = new GetLoginStateHelper();
         loginStateHelper.setOnGetLoginStateSuccessListener(loginStateBean -> {
             // 获取PW-ENCRYPT字段: 1 -- 需要加密; 0 -- 不需要加密
-            boolean isEncrypt = loginStateBean.getPwEncrypt() == Cons.CONS_PWENCRYPT_ON;
+            boolean isEncrypt = loginStateBean.getPwEncrypt() == GetLoginStateBean.CONS_PWENCRYPT_ON;
             // 进行加密操作
             encryptAccAndPsd(isEncrypt);
             // 正式发起请求
             reqLogin();
         });
-        loginStateHelper.setOnGetLoginStateFailedListener(this::loginFailedNext);
+
+        loginStateHelper.setOnGetLoginStateFailedListener(() -> {
+            Logg.t(Cons.TAG).ee("loginStateHelper app error");
+            loginFailedNext();
+            doneHelperNext();
+        });
+
         loginStateHelper.getLoginState();
     }
 
@@ -97,17 +111,19 @@ public class LoginHelper extends BaseHelper {
 
             @Override
             public void appError(Throwable ex) {
-                loginFailedNext();
+                Logg.t(Cons.TAG).ee("reqLogin app error");
+                loginFailed();
             }
 
             @Override
             public void fwError(FwError fwError) {
-                loginFailedNext();
+                Logg.t(Cons.TAG).ee("reqLogin fwError :" + fwError.getCode());
+                loginFailed();
             }
 
             @Override
             public void finish() {
-                doneHelperNext();
+
             }
         });
     }
@@ -116,18 +132,19 @@ public class LoginHelper extends BaseHelper {
      * 查询登陆状态是否已经更改为［已登录］
      */
     private void isStateLogin(LoginBean loginBean) {
-        GetLoginStateHelper xLoginState = new GetLoginStateHelper();
-        xLoginState.setOnGetLoginStateSuccessListener(loginStateBean -> {
+        GetLoginStateHelper loginStateHelper = new GetLoginStateHelper();
+        loginStateHelper.setOnGetLoginStateSuccessListener(loginStateBean -> {
             int state = loginStateBean.getState();
-            if (state == Cons.CONS_LOGIN) {/* 登陆成功 */
+            if (state == GetLoginStateBean.CONS_LOGIN) {/* 登陆成功 */
                 // 查询辅助标记置零
                 count = 0;
                 // 更新token
                 updateToken(loginBean);
                 // 回调
                 loginSuccessNext();
+                doneHelperNext();
 
-            } else if (state == Cons.CONS_LOGOUT) {/* 依然是登出状态 */
+            } else if (state == GetLoginStateBean.CONS_LOGOUT) {/* 依然是登出状态 */
                 if (count < 5) {// 小于5次 -- 则重复确认
                     try {
                         Thread.sleep(1000);
@@ -137,17 +154,29 @@ public class LoginHelper extends BaseHelper {
                         e.printStackTrace();
                     }
                 } else {
-                    count = 0;
-                    loginFailedNext();
+                    Logg.t(Cons.TAG).ee("isStateLogin count > 5 error");
+                    loginFailed();
                 }
 
-            } else if (state == Cons.CONS_LOGIN_TIME_USER_OUT) {/* 登陆次数超限 */
+            } else if (state == GetLoginStateBean.CONS_LOGIN_TIME_USER_OUT) {/* 登陆次数超限 */
+                count = 0;
                 loginOutTimeNext();
+                doneHelperNext();
 
             }
         });
-        xLoginState.setOnGetLoginStateFailedListener(this::loginFailedNext);
-        xLoginState.getLoginState();
+
+        loginStateHelper.setOnGetLoginStateFailedListener(this::loginFailed);
+        loginStateHelper.getLoginState();
+    }
+
+    /**
+     * 登陆失败后的处理方式
+     */
+    private void loginFailed() {
+        count = 0;
+        loginFailedNext();
+        doneHelperNext();
     }
 
     /**
@@ -157,9 +186,9 @@ public class LoginHelper extends BaseHelper {
      */
     private void updateToken(LoginBean loginBean) {
         String token = loginBean.getToken();
-        String key = loginBean.getKey();
-        String iv = loginBean.getIv();
-        String deviceName = systemInfoBean.getDeviceName();
+        String key = loginBean.getParam0();
+        String iv = loginBean.getParam1();
+        String deviceName = getSystemInfoBean.getDeviceName();
         XSmart.token = EncryptUtils.encryptToken(token, key, iv, deviceName);
     }
 
@@ -173,7 +202,7 @@ public class LoginHelper extends BaseHelper {
         account = isEncrypt ? EncryptUtils.encryptAdmin(account) : account;
         // 密码加密 (分为算法加密或者MD5加密)
         if (isEncrypt) {
-            if (systemInfoBean != null) {
+            if (getSystemInfoBean != null) {
                 // 如果不是［新设备］-- 采用普通算法加密
                 if (devType != Cons.DEV_2019) {
                     password = EncryptUtils.encryptAdmin(password);

@@ -8,7 +8,7 @@ public class XResponceBody<T> {
     private String jsonrpc;
     private T result;// 可变响应体
     private String id;
-    private FwError fwError;
+    private FwError error;
 
     public XResponceBody() {
     }
@@ -37,11 +37,11 @@ public class XResponceBody<T> {
         this.id = id;
     }
 
-    public FwError getFwError() {
-        return fwError;
+    public FwError getError() {
+        return error;
     }
 
-    public void setFwError(FwError fwError) {
-        this.fwError = fwError;
+    public void setError(FwError error) {
+        this.error = error;
     }
 }

@@ -1,6 +1,6 @@
 package com.p_xhelper_smart.p_xhelper_smart.helper;
 
-import com.p_xhelper_smart.p_xhelper_smart.bean.LoginStateBean;
+import com.p_xhelper_smart.p_xhelper_smart.bean.GetLoginStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
@@ -16,12 +16,12 @@ public class GetLoginStateHelper extends BaseHelper {
      */
     public void getLoginState() {
         prepareHelperNext();
-        XSmart<LoginStateBean> xsmart = new XSmart<>();
-        xsmart.xMethod(Cons.METHOD_GET_LOGIN_STATE).xPost(new XNormalCallback<LoginStateBean>() {
+        XSmart<GetLoginStateBean> xsmart = new XSmart<>();
+        xsmart.xMethod(Cons.METHOD_GET_LOGIN_STATE).xPost(new XNormalCallback<GetLoginStateBean>() {
 
             @Override
-            public void success(LoginStateBean loginStateBean) {
-                getLoginStateSuccessNext(loginStateBean);
+            public void success(GetLoginStateBean getLoginStateBean) {
+                getLoginStateSuccessNext(getLoginStateBean);
             }
 
             @Override
@@ -45,7 +45,7 @@ public class GetLoginStateHelper extends BaseHelper {
 
     // Inteerface--> 接口OnGetLoginStateSuccessListener
     public interface OnGetLoginStateSuccessListener {
-        void getLoginStateSuccess(LoginStateBean loginStateBean);
+        void getLoginStateSuccess(GetLoginStateBean getLoginStateBean);
     }
 
     // 对外方式setOnGetLoginStateSuccessListener
@@ -54,9 +54,9 @@ public class GetLoginStateHelper extends BaseHelper {
     }
 
     // 封装方法getLoginStateSuccessNext
-    private void getLoginStateSuccessNext(LoginStateBean loginStateBean) {
+    private void getLoginStateSuccessNext(GetLoginStateBean getLoginStateBean) {
         if (onGetLoginStateSuccessListener != null) {
-            onGetLoginStateSuccessListener.getLoginStateSuccess(loginStateBean);
+            onGetLoginStateSuccessListener.getLoginStateSuccess(getLoginStateBean);
         }
     }
 
