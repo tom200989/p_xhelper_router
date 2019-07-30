@@ -1,4 +1,4 @@
-package com.p_xhelper_smart.p_xhelper_smart.helper;
+package com.p_xhelper_smart.p_xhelper_smart.utils;
 
 import android.annotation.SuppressLint;
 
@@ -12,11 +12,15 @@ import java.util.List;
 public class Cons {
 
     public static String TAG = "xsmart";
+
     public static int DEV_UNKNOWN = -1;// 未知设备
     public static int DEV_2017 = 0;// 老设备
     public static int DEV_2019 = 1;// 新设备
+    public static int DEV_TARGET = 2;// 定制设备
+
     public static List<String> LIST_DEV_2017 = new ArrayList<>();
     public static List<String> LIST_DEV_2019 = new ArrayList<>();
+    public static List<String> LIST_DEV_TARGET = new ArrayList<>();
 
     static {
         // 老设备类型
@@ -30,6 +34,8 @@ public class Cons {
         LIST_DEV_2019.add("hub71");
         LIST_DEV_2019.add("mw12");
         LIST_DEV_2019.add("mw70");
+        // 定制设备
+        LIST_DEV_TARGET.add("E1");
     }
 
     // 方法
@@ -118,4 +124,10 @@ public class Cons {
     public static String METHOD_CONNECT_HOTSPOT = "ConnectHotspot";
     public static String METHOD_GET_CONNECT_HOTSPOT_STATE = "GetConnectHotspotState";
     public static String METHOD_DISCONNECT_HOTSPOT = "DisConnectHotspot";
+
+    public static int CONS_PWENCRYPT_ON = 1;// 需加密状态
+    public static int CONS_PWENCRYPT_OFF = 0;// 无需加密状态
+    public static int CONS_LOGOUT = 0;// 登出
+    public static int CONS_LOGIN = 1;// 登陆
+    public static int CONS_LOGIN_TIME_USER_OUT = 2;// 登陆次数用尽
 }

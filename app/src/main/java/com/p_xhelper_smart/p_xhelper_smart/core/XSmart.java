@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.p_xhelper_smart.p_xhelper_smart.helper.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XRequstBody;
@@ -37,7 +37,7 @@ public class XSmart<T> {
     private static final String HTTP = "http://";
     private static final String JRD = "/jrd/webapi";
     // token
-    public static final String token = "0";
+    public static String token = "0";
 
     // 请求方式
     private static final int GET = 0;
@@ -72,7 +72,7 @@ public class XSmart<T> {
     /**
      * 是否打印框架日志 (按需求设置, T:打印)
      */
-    public static boolean PRINT_TAG = false;
+    public static boolean PRINT_TAG = true;
 
     /**
      * 是否打印头部信息 (T: 打印)
@@ -345,5 +345,4 @@ public class XSmart<T> {
     private void printFinish() {
         lgg.vv("<-- url: [" + HTTP + SmartUtils.getWIFIGateWay(context) + "/" + method + "] request Finish");
     }
-
 }

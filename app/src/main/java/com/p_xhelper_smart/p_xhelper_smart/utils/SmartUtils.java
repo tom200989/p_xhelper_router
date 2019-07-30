@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 
-import com.p_xhelper_smart.p_xhelper_smart.helper.Cons;
-
 /*
  * Created by qianli.ma on 2019/7/25 0025.
  */
@@ -28,6 +26,12 @@ public class SmartUtils {
         for (String dev : Cons.LIST_DEV_2019) {
             if (deviceName.contains(dev) || dev.contains(deviceName)) {
                 return Cons.DEV_2019;
+            }
+        }
+        // 定制设备
+        for (String dev : Cons.LIST_DEV_TARGET) {
+            if (deviceName.contains(dev) || dev.contains(deviceName)) {
+                return Cons.DEV_TARGET;
             }
         }
         // 未知设备

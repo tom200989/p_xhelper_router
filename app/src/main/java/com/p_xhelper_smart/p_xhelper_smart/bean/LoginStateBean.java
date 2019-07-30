@@ -1,9 +1,11 @@
 package com.p_xhelper_smart.p_xhelper_smart.bean;
 
+import java.io.Serializable;
+
 /*
  * Created by qianli.ma on 2019/7/27 0027.
  */
-public class LoginStateBean {
+public class LoginStateBean implements Serializable {
 
     /**
      * State : 0
@@ -15,6 +17,9 @@ public class LoginStateBean {
     private int LoginRemainingTimes;// 登陆剩余次数
     private int LockedRemainingTime;// 锁定剩余时间
     private int PwEncrypt;// 是否需要兼容EE的加密, 1:需要加密; 0:不需要加密
+
+    public LoginStateBean() {
+    }
 
     public int getPwEncrypt() {
         return PwEncrypt;

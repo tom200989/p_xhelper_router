@@ -4,7 +4,7 @@ public class XRequstBody {
 
     String jsonrpc = "2.0";// 固定2.0
     String method;
-    Object params;
+    Object params;// 可变param
     String id = "1.8";// 该值随意传
 
     public XRequstBody() {

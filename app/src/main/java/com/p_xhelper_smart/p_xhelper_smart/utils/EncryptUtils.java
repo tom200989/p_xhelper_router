@@ -2,7 +2,6 @@ package com.p_xhelper_smart.p_xhelper_smart.utils;
 
 import com.p_encrypt.p_encrypt.core.aesPKCS7.AES_PCKS7;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
-import com.p_xhelper_smart.p_xhelper_smart.helper.Cons;
 import com.tcl.token.javaToken.BASE64_src.sun.misc.BASE64Encoder;
 
 /*
@@ -17,7 +16,7 @@ public class EncryptUtils {
      * @param tokenKey   token key(仅仅使用于新设备)
      * @param tokenIv    token iv(仅仅使用于新设备)
      * @param deviceName 当前设备名
-     * @return 密文
+     * @return 加密后的token
      */
     public static String encryptToken(String token, String tokenKey, String tokenIv, String deviceName) {
         // 1.对固有的KEY进行处理
@@ -44,7 +43,7 @@ public class EncryptUtils {
             return encoder.encode(tokenByte);
 
         } else {
-            return "";
+            return "0";
         }
     }
 

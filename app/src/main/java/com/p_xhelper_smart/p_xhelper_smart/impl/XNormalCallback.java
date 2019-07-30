@@ -33,11 +33,6 @@ public abstract class XNormalCallback<T> extends XNormalListener<XResponceBody<T
     }
 
     @Override
-    public void finish() {
-        // 由开发自由实现
-    }
-
-    @Override
     public void onNext(XResponceBody<T> xResponceBody) {
         FwError fwError = xResponceBody.getFwError();
         if (fwError != null) {

@@ -6,7 +6,7 @@ package com.p_xhelper_smart.p_xhelper_smart.impl;
 public class XResponceBody<T> {
 
     private String jsonrpc;
-    private T result;
+    private T result;// 可变响应体
     private String id;
     private FwError fwError;
 
