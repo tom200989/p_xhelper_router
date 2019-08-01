@@ -8,11 +8,11 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XRequstBody;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XResponceBody;
+import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
 import com.p_xhelper_smart.p_xhelper_smart.utils.HostnameUtils;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
@@ -25,6 +25,8 @@ import org.xutils.x;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created by qianli.ma on 2019/7/25 0025.
@@ -79,6 +81,19 @@ public class XSmart<T> {
      * 是否打印头部信息 (T: 打印)
      */
     public static boolean PRINT_HEAD = false;
+
+    /**
+     * 用于存储网络请求对象
+     */
+    private static final List<Callback.Cancelable> cancelList = new ArrayList<>();
+
+    /**
+     * 请求体
+     */
+    private Callback.Cancelable requestCancelable;
+
+    private int count = 0;// 辅助递归计数器
+    private int MAX_COUNT = 9;// 最大请求次数
 
     public XSmart() {
         lgg = Logg.t(Cons.TAG).openClose(PRINT_TAG);
@@ -136,7 +151,9 @@ public class XSmart<T> {
             HttpMethod httpMethod = HttpMethod.POST;
             httpMethod = getHttpMethod(type, httpMethod);
             // 发起请求
-            x.http().request(httpMethod, requstParams, new Callback.CommonCallback<String>() {
+            // 打印日志
+            // 交付给接口处理返回
+            requestCancelable = x.http().request(httpMethod, requstParams, new Callback.CommonCallback<String>() {
                 @Override
                 public void responseBody(UriRequest uriRequest) {
                     printUriRequest(uriRequest);
@@ -148,35 +165,46 @@ public class XSmart<T> {
                     // 打印日志
                     XResponceBody xResponceBody = toBean(result, callback);
                     FwError fwError = xResponceBody.getError();
-                    if (fwError != null) {
-                        printFwError(fwError.getCode(), fwError.getMessage());
+                    if (fwError != null & count >= 0 & count < MAX_COUNT) {
+                        request(type, callback);
+                        count++;
                     } else {
-                        printResponseSuccess(result);
+                        count = 0;
+                        if (fwError != null) {
+                            printFwError(fwError.getCode(), fwError.getMessage());
+                        } else {
+                            printResponseSuccess(result);
+                        }
+                        // 交付给接口处理返回
+                        callback.onNext(xResponceBody);
                     }
-
-                    // 交付给接口处理返回
-                    callback.onNext(xResponceBody);
                 }
 
                 @Override
                 public void onError(Throwable ex, boolean b) {
+                    count = 0;
                     printAppError(ex);
                     callback.appError(ex);
                 }
 
                 @Override
                 public void onCancelled(CancelledException cex) {
+                    count = 0;
                     printCancel(cex);
                     callback.cancel(cex);
                 }
 
                 @Override
                 public void onFinished() {
-                    printFinish();
-                    callback.finish();
+                    if (count == 0 | count == MAX_COUNT) {
+                        count = 0;
+                        printFinish();
+                        callback.finish();
+                    }
                 }
             });
 
+            cancelList.add(requestCancelable);
 
         } else {
             Toast.makeText(context, "请调用 XSmart.xMethod(method) 传入需要访问的方法method", Toast.LENGTH_LONG).show();
@@ -227,7 +255,7 @@ public class XSmart<T> {
         XRequstBody requstBody = new XRequstBody();
         requstBody.setMethod(method);
         requstBody.setParams(object != null ? object : new Object());
-        TypeUtils.compatibleWithJavaBean =true;// 保证fastjson传递数据时保持原大小写的设置(解决全大写)
+        TypeUtils.compatibleWithJavaBean = true;// 保证fastjson传递数据时保持原大小写的设置(解决全大写)
         TypeUtils.compatibleWithFieldName = true;// 保证fastjson传递数据时保持原大小写的设置(解决首字母大小)
         return JSON.toJSONString(requstBody);
     }
@@ -249,6 +277,17 @@ public class XSmart<T> {
                 break;
         }
         return httpMethod;
+    }
+
+    /**
+     * 取消全部的网络请求
+     */
+    public static void xCancelAllRequest() {
+        for (Callback.Cancelable cancelable : cancelList) {
+            if (cancelable != null) {
+                cancelable.cancel();
+            }
+        }
     }
 
     /**
