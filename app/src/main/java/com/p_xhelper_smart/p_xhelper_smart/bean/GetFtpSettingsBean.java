@@ -17,14 +17,14 @@ public class GetFtpSettingsBean implements Serializable {
     private int Anonymous;
     private int AuthType;
 
-    public static int FTPSTATUS_DISABLE = 0;
-    public static int FTPSTATUS_ENABLE = 1;
+    public static int CONS_FTPSTATUS_DISABLE = 0;
+    public static int CONS_FTPSTATUS_ENABLE = 1;
     
-    public static int ANONYMOUS_DISABLE = 0;
-    public static int ANONYMOUS_ENABLE = 1;
+    public static int CONS_ANONYMOUS_DISABLE = 0;
+    public static int CONS_ANONYMOUS_ENABLE = 1;
     
-    public static int READONLY = 0;
-    public static int READWRITE = 1;
+    public static int CONS_READONLY = 0;
+    public static int CONS_READWRITE = 1;
 
     public GetFtpSettingsBean() {
     }

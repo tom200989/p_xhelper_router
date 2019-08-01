@@ -16,8 +16,8 @@ public class GetDLNASettingsBean implements Serializable {
     private int DlnaStatus;
     private String DlnaName;
 
-    public static int DISABLE = 0;
-    public static int ENABLE = 1;
+    public static int CONS_DISABLE = 0;
+    public static int CONS_ENABLE = 1;
 
     public GetDLNASettingsBean() {
     }

@@ -14,6 +14,15 @@ public class SetFtpSettingsParam implements Serializable {
      * AuthType : 0
      */
 
+    public static int CONS_FTPSTATUS_DISABLE = 0;
+    public static int CONS_FTPSTATUS_ENABLE = 1;
+
+    public static int CONS_ANONYMOUS_DISABLE = 0;
+    public static int CONS_ANONYMOUS_ENABLE = 1;
+
+    public static int CONS_READONLY = 0;
+    public static int CONS_READWRITE = 1;
+
     private int FtpStatus;
     private int Anonymous;
     private int AuthType;

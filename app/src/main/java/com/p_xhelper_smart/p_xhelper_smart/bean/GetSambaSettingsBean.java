@@ -16,14 +16,14 @@ public class GetSambaSettingsBean implements Serializable {
     private int Anonymous;
     private int AuthType;
 
-    public static int SAMBASTATUS_DISABLE = 0;
-    public static int SAMBASTATUS_ENABLE = 1;
+    public static int CONS_SAMBASTATUS_DISABLE = 0;
+    public static int CONS_SAMBASTATUS_ENABLE = 1;
 
-    public static int ANONYMOUS_DISABLE = 0;
-    public static int ANONYMOUS_ENABLE = 1;
+    public static int CONS_ANONYMOUS_DISABLE = 0;
+    public static int CONS_ANONYMOUS_ENABLE = 1;
 
-    public static int READONLY = 0;
-    public static int READWRITE = 1;
+    public static int CONS_READONLY = 0;
+    public static int CONS_READWRITE = 1;
 
     public GetSambaSettingsBean() {
     }

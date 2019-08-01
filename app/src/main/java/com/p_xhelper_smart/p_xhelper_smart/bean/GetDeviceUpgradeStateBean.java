@@ -18,6 +18,9 @@ public class GetDeviceUpgradeStateBean implements Serializable {
     public static int CONS_UPDATING = 1;
     public static int CONS_COMPLETE = 2;
 
+    public GetDeviceUpgradeStateBean() {
+    }
+
     public int getStatus() {
         return Status;
     }
