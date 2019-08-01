@@ -67,7 +67,7 @@ public class Cons {
     public static String METHOD_GET_SYSTEM_INFO = "GetSystemInfo";
     public static String METHOD_SET_DEVICE_REBOOT = "SetDeviceReboot";
     public static String METHOD_SET_DEVICE_RESET = "SetDeviceReset";
-    public static String METHOD_SET_DEVICE_BACKUP = "SetDeviceBackup";// backup接口稍候再集成
+    public static String METHOD_SET_DEVICE_BACKUP = "SetDeviceBackup";
     public static String METHOD_GET_WAN_SETTINGS = "GetWanSettings";
     public static String METHOD_SET_WAN_SETTINGS = "SetWanSettings";
     public static String METHOD_GET_LAN_SETTINGS = "GetLanSettings";

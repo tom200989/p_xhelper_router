@@ -16,6 +16,9 @@ public abstract class XBackupCallback implements XBackupListener {
     public void fwError(FwError fwError) {
         // 选择性实现(下载一般用不上)
     }
-    
-    
+
+    @Override
+    public void wifiOff() {
+        // 选择性实现
+    }
 }

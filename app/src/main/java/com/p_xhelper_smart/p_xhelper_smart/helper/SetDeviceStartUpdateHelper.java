@@ -33,7 +33,7 @@ public class SetDeviceStartUpdateHelper extends BaseHelper {
             public void fwError(FwError fwError) {
                 SetDeviceStartUpdateFailedNext();
             }
-
+            
             @Override
             public void finish() {
                 doneHelperNext();

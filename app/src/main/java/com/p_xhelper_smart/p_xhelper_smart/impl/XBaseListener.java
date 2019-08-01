@@ -34,4 +34,9 @@ public interface XBaseListener {
      * 请求完成(无论成功与否)
      */
     void finish();
+
+    /**
+     * WIFI无效或断连
+     */
+    void wifiOff();
 }

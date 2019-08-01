@@ -3,6 +3,7 @@ package com.p_xhelper_smart.p_xhelper_smart.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.Callback;
 import org.xutils.http.request.UriRequest;
 
@@ -30,6 +31,12 @@ public abstract class XNormalCallback<T> extends XNormalListener<XResponceBody<T
     @Override
     public void cancel(Callback.CancelledException cex) {
         // 由开发自由实现
+    }
+
+    @Override
+    public void wifiOff() {
+        // 发送WIFI掉线信号 -- WifiShutDownBean
+        EventBus.getDefault().postSticky(new WifiShutDownBean());
     }
 
     @Override

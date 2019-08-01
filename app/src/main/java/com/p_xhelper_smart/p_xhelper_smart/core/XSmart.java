@@ -96,9 +96,14 @@ public class XSmart<T> {
     private static final List<Callback.Cancelable> cancelList = new ArrayList<>();
 
     /**
-     * 请求体
+     * 普通请求体
      */
     private Callback.Cancelable requestCancelable;
+
+    /**
+     * 备份下载请求体
+     */
+    private Callback.Cancelable backupCancelable;
 
     private int count = 0;// 辅助递归计数器
     private int MAX_COUNT = 9;// 最大请求次数
@@ -156,77 +161,87 @@ public class XSmart<T> {
      * @param callback 回调
      */
     private void request(int type, final XNormalCallback<T> callback) {
-        if (!TextUtils.isEmpty(method)) {
-            // 初始化context
-            if (context == null) {
-                Toast.makeText(context, "请先调用 XSmart.init(context) 初始context", Toast.LENGTH_LONG).show();
-                printNormal("请先调用 XSmart.init(context) 初始context");
-                return;
-            }
-            // 封装请求参数
-            RequestParams requstParams = getRequstParams();
-            // 封装请求方法
-            HttpMethod httpMethod = HttpMethod.POST;
-            httpMethod = getHttpMethod(type, httpMethod);
-            // 发起请求
-            // 打印日志
-            // 交付给接口处理返回
-            requestCancelable = x.http().request(httpMethod, requstParams, new Callback.CommonCallback<String>() {
-                @Override
-                public void responseBody(UriRequest uriRequest) {
-                    printUriRequest(uriRequest);
-                    callback.getUriRequest(uriRequest);
+        // 第一步确认WIFI连接上
+        if (SmartUtils.isWifiOn(context)) {
+            if (!TextUtils.isEmpty(method)) {
+                // 初始化context
+                if (context == null) {
+                    Toast.makeText(context, "请先调用 XSmart.init(context) 初始context", Toast.LENGTH_LONG).show();
+                    printNormal("请先调用 XSmart.init(context) 初始context");
+                    return;
                 }
+                // 封装请求参数
+                RequestParams requstParams = getRequstParams();
+                // 封装请求方法
+                HttpMethod httpMethod = HttpMethod.POST;
+                httpMethod = getHttpMethod(type, httpMethod);
+                // 发起请求
+                // 打印日志
+                // 交付给接口处理返回
+                requestCancelable = x.http().request(httpMethod, requstParams, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void responseBody(UriRequest uriRequest) {
+                        printUriRequest(uriRequest);
+                        callback.getUriRequest(uriRequest);
+                    }
 
-                @Override
-                public void onSuccess(String result) {
-                    // 打印日志
-                    XResponceBody xResponceBody = toBean(result, callback);
-                    FwError fwError = xResponceBody.getError();
-                    if (fwError != null & count >= 0 & count < MAX_COUNT) {
-                        request(type, callback);
-                        count++;
-                    } else {
-                        count = 0;
-                        if (fwError != null) {
-                            printFwError(fwError.getCode(), fwError.getMessage());
+                    @Override
+                    public void onSuccess(String result) {
+                        // 打印日志
+                        XResponceBody xResponceBody = toBean(result, callback);
+                        FwError fwError = xResponceBody.getError();
+                        if (fwError != null & count >= 0 & count < MAX_COUNT) {
+                            request(type, callback);
+                            count++;
                         } else {
-                            printResponseSuccess(result);
+                            count = 0;
+                            if (fwError != null) {
+                                printFwError(fwError.getCode(), fwError.getMessage());
+                            } else {
+                                printResponseSuccess(result);
+                            }
+                            // 交付给接口处理返回
+                            callback.onNext(xResponceBody);
                         }
-                        // 交付给接口处理返回
-                        callback.onNext(xResponceBody);
                     }
-                }
 
-                @Override
-                public void onError(Throwable ex, boolean b) {
-                    count = 0;
-                    printAppError(ex);
-                    callback.appError(ex);
-                }
-
-                @Override
-                public void onCancelled(CancelledException cex) {
-                    count = 0;
-                    printCancel(cex);
-                    callback.cancel(cex);
-                }
-
-                @Override
-                public void onFinished() {
-                    if (count == 0 | count == MAX_COUNT) {
+                    @Override
+                    public void onError(Throwable ex, boolean b) {
                         count = 0;
-                        printFinish();
-                        callback.finish();
+                        printAppError(ex);
+                        callback.appError(ex);
                     }
-                }
-            });
 
-            // cancelList.add(requestCancelable);// 暂时不添加
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+                        count = 0;
+                        printCancel(cex);
+                        callback.cancel(cex);
+                    }
 
+                    @Override
+                    public void onFinished() {
+                        // 移除请求连接体
+                        cancelList.remove(requestCancelable);
+                        if (count == 0 | count == MAX_COUNT) {
+                            count = 0;
+                            printFinish();
+                            callback.finish();
+                        }
+                    }
+                });
+                // 添加到请求体集合 -- 统一管理
+                cancelList.add(requestCancelable);
+
+            } else {
+                Toast.makeText(context, "请调用 XSmart.xMethod(method) 传入需要访问的方法method", Toast.LENGTH_LONG).show();
+                printNormal("请调用 XSmart.xMethod(method) 传入需要访问的方法method");
+            }
         } else {
-            Toast.makeText(context, "请调用 XSmart.xMethod(method) 传入需要访问的方法method", Toast.LENGTH_LONG).show();
-            printNormal("请调用 XSmart.xMethod(method) 传入需要访问的方法method");
+            // WIFI断线 -- 切断所有请求
+            xCancelAllRequest();
+            callback.wifiOff();
+            printWifiState(false);
         }
     }
 
@@ -234,70 +249,84 @@ public class XSmart<T> {
      * 备份操作
      *
      * @param savePath 备份路径
-     * @param listener 回调
+     * @param callback 回调
      */
-    private void downBackup(String savePath, XBackupCallback listener) {
-        // 初始化context
-        if (context == null) {
-            Toast.makeText(context, "请先调用 XSmart.init(context) 初始context", Toast.LENGTH_LONG).show();
-            printNormal("请先调用 XSmart.init(context) 初始context");
-            return;
-        }
-        // 封装请求参数
-        RequestParams requstParams = getDownBackupParam(savePath);
-        // 请求下载
-        x.http().get(requstParams, new Callback.ProgressCallback<File>() {
-
-            @Override
-            public void responseBody(UriRequest uriRequest) {
-                listener.getUriRequest(uriRequest);
-                printUriRequest(uriRequest);
+    private void downBackup(String savePath, XBackupCallback callback) {
+        // 第一步确保WIFI连接上
+        if (SmartUtils.isWifiOn(context)) {
+            // 初始化context
+            if (context == null) {
+                Toast.makeText(context, "请先调用 XSmart.init(context) 初始context", Toast.LENGTH_LONG).show();
+                printNormal("请先调用 XSmart.init(context) 初始context");
+                return;
             }
+            // 封装请求参数
+            RequestParams requstParams = getDownBackupParam(savePath);
+            // 请求下载
+            backupCancelable = x.http().get(requstParams, new Callback.ProgressCallback<File>() {
 
-            @Override
-            public void onWaiting() {
-                listener.waiting();
-                printNormal("--> wait to upload");
-            }
-
-            @Override
-            public void onStarted() {
-                listener.start();
-                printNormal("--> start to upload");
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isDownloading) {
-                listener.loading(total, current, isDownloading);
-                if (PRINT_PROGRESS) {
-                    printNormal(" progress--> total: " + total + ";current: " + current + ";isDownloading: " + isDownloading);
+                @Override
+                public void responseBody(UriRequest uriRequest) {
+                    callback.getUriRequest(uriRequest);
+                    printUriRequest(uriRequest);
                 }
-            }
 
-            @Override
-            public void onSuccess(File file) {
-                listener.success(file);
-                printNormal("upload successfule, the [PATH] is : " + file.getAbsolutePath());
-            }
+                @Override
+                public void onWaiting() {
+                    callback.waiting();
+                    printNormal("--> wait to upload");
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean b) {
-                listener.appError(ex);
-                printNormal("--> down failed: " + ex.getMessage());
-            }
+                @Override
+                public void onStarted() {
+                    callback.start();
+                    printNormal("--> start to upload");
+                }
 
-            @Override
-            public void onCancelled(CancelledException e) {
-                listener.cancel(e);
-                printNormal("--> down cancel: " + e.getMessage());
-            }
+                @Override
+                public void onLoading(long total, long current, boolean isDownloading) {
+                    callback.loading(total, current, isDownloading);
+                    if (PRINT_PROGRESS) {
+                        printNormal(" progress--> total: " + total + ";current: " + current + ";isDownloading: " + isDownloading);
+                    }
+                }
 
-            @Override
-            public void onFinished() {
-                listener.finish();
-                printNormal("--> down finish");
-            }
-        });
+                @Override
+                public void onSuccess(File file) {
+                    callback.success(file);
+                    printNormal("upload successfule, the [PATH] is : " + file.getAbsolutePath());
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean b) {
+                    callback.appError(ex);
+                    printNormal("--> down failed: " + ex.getMessage());
+                }
+
+                @Override
+                public void onCancelled(CancelledException e) {
+                    callback.cancel(e);
+                    printNormal("--> down cancel: " + e.getMessage());
+                }
+
+                @Override
+                public void onFinished() {
+                    // 移除请求体
+                    cancelList.remove(backupCancelable);
+                    callback.finish();
+                    printNormal("--> down finish");
+                }
+            });
+
+            // 添加到请求体集合 -- 统一管理
+            cancelList.add(backupCancelable);
+
+        } else {
+            // WIFI断线 -- 切断所有请求
+            xCancelAllRequest();
+            callback.wifiOff();
+            printWifiState(false);
+        }
     }
 
     /**
@@ -496,5 +525,18 @@ public class XSmart<T> {
      */
     private void printFinish() {
         lgg.vv("<-- url: [" + HTTP + SmartUtils.getWIFIGateWay(context) + "/" + method + "] request Finish");
+    }
+
+    /**
+     * WIFI连接与否
+     *
+     * @param isOn T:连接
+     */
+    private void printWifiState(boolean isOn) {
+        if (isOn) {
+            lgg.ii("wifi is on");
+        } else {
+            lgg.ee("wifi is off");
+        }
     }
 }
