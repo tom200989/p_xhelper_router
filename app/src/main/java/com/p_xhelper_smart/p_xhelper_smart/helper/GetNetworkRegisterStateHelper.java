@@ -22,13 +22,13 @@ public class GetNetworkRegisterStateHelper extends BaseHelper {
             @Override
             public void success(GetNetworkRegisterStateBean result) {
                 int state = result.getRegist_state();
-                if (state == GetNetworkRegisterStateBean.NOT_REGISETER) {
+                if (state == GetNetworkRegisterStateBean.CONS_NOT_REGISETER) {
                     notRegisterNext();
-                } else if (state == GetNetworkRegisterStateBean.REGISTTING) {
+                } else if (state == GetNetworkRegisterStateBean.CONS_REGISTTING) {
                     registtingNext();
-                } else if (state == GetNetworkRegisterStateBean.REGISTER_SUCCESSFUL) {
+                } else if (state == GetNetworkRegisterStateBean.CONS_REGISTER_SUCCESSFUL) {
                     registerSuccessNext();
-                } else if (state == GetNetworkRegisterStateBean.REGISTRATION_FAILED) {
+                } else if (state == GetNetworkRegisterStateBean.CONS_REGISTRATION_FAILED) {
                     getNetworkRegisterStateFailedNext();
                 }
             }

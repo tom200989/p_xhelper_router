@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
+import com.p_xhelper_smart.p_xhelper_smart.impl.XBackupCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XRequstBody;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XResponceBody;
@@ -23,6 +24,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.http.request.UriRequest;
 import org.xutils.x;
 
+import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class XSmart<T> {
     // url
     private static final String HTTP = "http://";
     private static final String JRD = "/jrd/webapi";
+    private static final String BACKUP = "/cfgbak/configure.bin";
     // token
     public static String token = "0";
 
@@ -81,6 +84,11 @@ public class XSmart<T> {
      * 是否打印头部信息 (T: 打印)
      */
     public static boolean PRINT_HEAD = false;
+
+    /**
+     * 是否打印进度 (T: 打印)
+     */
+    public static boolean PRINT_PROGRESS = false;
 
     /**
      * 用于存储网络请求对象
@@ -129,6 +137,16 @@ public class XSmart<T> {
      */
     public void xPost(XNormalCallback<T> listener) {
         request(POST, listener);
+    }
+
+    /**
+     * 备份
+     *
+     * @param savePath 备份路径
+     * @param listener 回调
+     */
+    public void xBackup(String savePath, XBackupCallback listener) {
+        downBackup(savePath, listener);
     }
 
     /**
@@ -204,12 +222,104 @@ public class XSmart<T> {
                 }
             });
 
-            cancelList.add(requestCancelable);
+            // cancelList.add(requestCancelable);// 暂时不添加
 
         } else {
             Toast.makeText(context, "请调用 XSmart.xMethod(method) 传入需要访问的方法method", Toast.LENGTH_LONG).show();
             printNormal("请调用 XSmart.xMethod(method) 传入需要访问的方法method");
         }
+    }
+
+    /**
+     * 备份操作
+     *
+     * @param savePath 备份路径
+     * @param listener 回调
+     */
+    private void downBackup(String savePath, XBackupCallback listener) {
+        // 初始化context
+        if (context == null) {
+            Toast.makeText(context, "请先调用 XSmart.init(context) 初始context", Toast.LENGTH_LONG).show();
+            printNormal("请先调用 XSmart.init(context) 初始context");
+            return;
+        }
+        // 封装请求参数
+        RequestParams requstParams = getDownBackupParam(savePath);
+        // 请求下载
+        x.http().get(requstParams, new Callback.ProgressCallback<File>() {
+
+            @Override
+            public void responseBody(UriRequest uriRequest) {
+                listener.getUriRequest(uriRequest);
+                printUriRequest(uriRequest);
+            }
+
+            @Override
+            public void onWaiting() {
+                listener.waiting();
+                printNormal("--> wait to upload");
+            }
+
+            @Override
+            public void onStarted() {
+                listener.start();
+                printNormal("--> start to upload");
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+                listener.loading(total, current, isDownloading);
+                if (PRINT_PROGRESS) {
+                    printNormal(" progress--> total: " + total + ";current: " + current + ";isDownloading: " + isDownloading);
+                }
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                listener.success(file);
+                printNormal("upload successfule, the [PATH] is : " + file.getAbsolutePath());
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean b) {
+                listener.appError(ex);
+                printNormal("--> down failed: " + ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+                listener.cancel(e);
+                printNormal("--> down cancel: " + e.getMessage());
+            }
+
+            @Override
+            public void onFinished() {
+                listener.finish();
+                printNormal("--> down finish");
+            }
+        });
+    }
+
+    /**
+     * 获取下载备份的参数
+     *
+     * @param savePath 保存路径
+     * @return 备份请求参数
+     */
+    private RequestParams getDownBackupParam(String savePath) {
+        printNormal("prepare to backup params");
+        String gateWay = SmartUtils.getWIFIGateWay(context);// 获取网关
+        RequestParams params = new RequestParams(HTTP + gateWay + JRD + BACKUP);
+        params.setHostnameVerifier(HostnameUtils.getVerify(context));
+        params.setConnectTimeout(TIMEOUT);
+        params.setReadTimeout(TIMEOUT);
+        params.addHeader("_TclRequestVerificationKey", AUTHORIZATION);
+        params.addHeader("_TclRequestVerificationToken", token);
+        params.addHeader("Referer", HTTP + gateWay + "/");
+        // 保存路径
+        params.setSaveFilePath(savePath);
+        printHead();
+        return params;
     }
 
     /**

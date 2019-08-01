@@ -5,7 +5,6 @@ import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -18,8 +17,7 @@ public class GetSimStatusHelper extends BaseHelper {
         xSimStatus.xMethod(Cons.METHOD_GET_SIM_STATUS).xPost(new XNormalCallback<GetSimStatusBean>() {
             @Override
             public void success(GetSimStatusBean simStatusBean) {
-                // TODO: 2019/7/30 0030  测试是否能获取到
-                Logg.t("ma_test_ui").ii(simStatusBean.toString());
+                GetSimStatusSuccessNext(simStatusBean);
             }
 
             @Override
@@ -40,6 +38,25 @@ public class GetSimStatusHelper extends BaseHelper {
     }
 
     /* -------------------------------------------- impl -------------------------------------------- */
+
+    private OnGetSimStatusSuccessListener onGetSimStatusSuccessListener;
+
+    // Inteerface--> 接口OnGetSimStatusSuccessListener
+    public interface OnGetSimStatusSuccessListener {
+        void GetSimStatusSuccess(GetSimStatusBean attr);
+    }
+
+    // 对外方式setOnGetSimStatusSuccessListener
+    public void setOnGetSimStatusSuccessListener(OnGetSimStatusSuccessListener onGetSimStatusSuccessListener) {
+        this.onGetSimStatusSuccessListener = onGetSimStatusSuccessListener;
+    }
+
+    // 封装方法GetSimStatusSuccessNext
+    private void GetSimStatusSuccessNext(GetSimStatusBean attr) {
+        if (onGetSimStatusSuccessListener != null) {
+            onGetSimStatusSuccessListener.GetSimStatusSuccess(attr);
+        }
+    }
 
     private OnGetSimStatusFailedListener onGetSimStatusFailedListener;
 
