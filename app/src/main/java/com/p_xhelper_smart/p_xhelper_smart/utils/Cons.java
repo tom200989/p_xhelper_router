@@ -97,8 +97,8 @@ public class Cons {
     public static String METHOD_GET_PROFILE_LIST = "GetProfileList";
     public static String METHOD_GET_SMS_CONTACT_LIST = "GetSMSContactList";
     public static String METHOD_GET_SMS_INIT_STATE = "getSmsInitState";
-    public static String METHOD_GET_SMSCONTENTLIST = "GetSMSContentList";
-    public static String METHOD_SAVESMS = "SaveSMS";
+    public static String METHOD_GET_SMS_CONTENT_LIST = "GetSMSContentList";
+    public static String METHOD_SAVE_SMS = "SaveSMS";
     public static String METHOD_DELETE_SMS = "DeleteSMS";
     public static String METHOD_SEND_SMS = "SendSMS";
     public static String METHOD_GET_SEND_SMS_RESULT = "GetSendSMSResult";
