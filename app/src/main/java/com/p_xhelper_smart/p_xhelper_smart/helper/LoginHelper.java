@@ -51,7 +51,7 @@ public class LoginHelper extends BaseHelper {
             this.getSystemInfoBean = getSystemInfobean;
             devType = SmartUtils.getDEVType(getSystemInfobean.getDeviceName());
             // 1.判断是否为E1版本
-            if (devType == Cons.DEV_TARGET) {
+            if (devType == Cons.ENCRYPT_DEV_TARGET) {
                 // 1.1.E1版本必须加密
                 encryptAccAndPsd(true);
             } else {
@@ -204,7 +204,7 @@ public class LoginHelper extends BaseHelper {
         if (isEncrypt) {
             if (getSystemInfoBean != null) {
                 // 如果不是［新设备］-- 采用普通算法加密
-                if (devType != Cons.DEV_2019) {
+                if (devType != Cons.ENCRYPT_DEV_2019) {
                     password = EncryptUtils.encryptAdmin(password);
                 } else {// 如果是［新设备］-- 采用MD5加密
                     password = Md5Code.encryption(password).toLowerCase();

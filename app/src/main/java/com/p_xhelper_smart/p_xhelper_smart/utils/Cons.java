@@ -13,29 +13,30 @@ public class Cons {
 
     public static String TAG = "xsmart";
 
-    public static int DEV_UNKNOWN = -1;// 未知设备
-    public static int DEV_2017 = 0;// 老设备
-    public static int DEV_2019 = 1;// 新设备
-    public static int DEV_TARGET = 2;// 定制设备
+    public static int ENCRYPT_DEV_UNKNOWN = -1;// 未知设备
+    public static int ENCRYPT_DEV_2017 = 0;// 老设备
+    public static int ENCRYPT_DEV_2019 = 1;// 新设备
+    public static int ENCRYPT_DEV_TARGET = 2;// 定制设备
 
-    public static List<String> LIST_DEV_2017 = new ArrayList<>();
-    public static List<String> LIST_DEV_2019 = new ArrayList<>();
-    public static List<String> LIST_DEV_TARGET = new ArrayList<>();
+    public static List<String> ENCRYPT_LIST_DEV_2017 = new ArrayList<>();
+    public static List<String> ENCRYPT_LIST_DEV_2019 = new ArrayList<>();
+    public static List<String> ENCRYPT_LIST_DEV_TARGET = new ArrayList<>();
 
     static {
-        // 老设备类型
-        LIST_DEV_2017.add("hh70");
-        LIST_DEV_2017.add("hub70");
-        LIST_DEV_2017.add("hh40");
-        LIST_DEV_2017.add("hub40");
-        LIST_DEV_2017.add("hh41");
-        LIST_DEV_2017.add("hub41");
-        // 新设备类型
-        LIST_DEV_2019.add("hub71");
-        LIST_DEV_2019.add("mw12");
-        LIST_DEV_2019.add("mw70");
-        // 定制设备
-        LIST_DEV_TARGET.add("E1");
+        // 老设备类型(仅针对加密)
+        ENCRYPT_LIST_DEV_2017.add("hh70");
+        ENCRYPT_LIST_DEV_2017.add("hub70");
+        ENCRYPT_LIST_DEV_2017.add("hh40");
+        ENCRYPT_LIST_DEV_2017.add("hub40");
+        ENCRYPT_LIST_DEV_2017.add("hh41");
+        ENCRYPT_LIST_DEV_2017.add("hub41");
+        // 新设备类型(仅针对加密)
+        ENCRYPT_LIST_DEV_2019.add("hub71");
+        ENCRYPT_LIST_DEV_2019.add("hh71");
+        ENCRYPT_LIST_DEV_2019.add("mw12");
+        ENCRYPT_LIST_DEV_2019.add("mw70");
+        // 定制设备(仅针对加密)
+        ENCRYPT_LIST_DEV_TARGET.add("E1");
     }
 
     // 方法

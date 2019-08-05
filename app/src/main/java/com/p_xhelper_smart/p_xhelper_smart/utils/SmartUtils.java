@@ -22,25 +22,25 @@ public class SmartUtils {
         // 先最小化
         deviceName = deviceName.toLowerCase();
         // 老设备
-        for (String dev : Cons.LIST_DEV_2017) {
+        for (String dev : Cons.ENCRYPT_LIST_DEV_2017) {
             if (deviceName.contains(dev) || dev.contains(deviceName)) {
-                return Cons.DEV_2017;
+                return Cons.ENCRYPT_DEV_2017;
             }
         }
         // 新设备
-        for (String dev : Cons.LIST_DEV_2019) {
+        for (String dev : Cons.ENCRYPT_LIST_DEV_2019) {
             if (deviceName.contains(dev) || dev.contains(deviceName)) {
-                return Cons.DEV_2019;
+                return Cons.ENCRYPT_DEV_2019;
             }
         }
         // 定制设备
-        for (String dev : Cons.LIST_DEV_TARGET) {
+        for (String dev : Cons.ENCRYPT_LIST_DEV_TARGET) {
             if (deviceName.contains(dev) || dev.contains(deviceName)) {
-                return Cons.DEV_TARGET;
+                return Cons.ENCRYPT_DEV_TARGET;
             }
         }
         // 未知设备
-        return Cons.DEV_UNKNOWN;
+        return Cons.ENCRYPT_DEV_UNKNOWN;
     }
 
     /**
