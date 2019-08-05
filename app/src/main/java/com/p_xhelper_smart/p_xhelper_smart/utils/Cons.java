@@ -84,7 +84,6 @@ public class Cons {
     public static String METHOD_SET_SAMBA_SETTINGS = "SetSambaSettings";
     public static String METHOD_SET_DLNA_SETTINGS = "SetDLNASettings";
     public static String METHOD_GET_BATTERY_STATE = "GetBatteryState";
-    public static String METHOD_GET_NETWORKINFO = "GetNetworkInfo";
     public static String METHOD_SET_USAGE_SETTING = "SetUsageSettings";
     public static String METHOD_GET_USAGE_SETTING = "GetUsageSettings";
     public static String METHOD_GET_USAGE_RECORD = "GetUsageRecord";
