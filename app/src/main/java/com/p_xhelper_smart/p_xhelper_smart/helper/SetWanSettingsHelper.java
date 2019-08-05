@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SetWanSettingsParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/8/1 0001.
@@ -20,7 +20,7 @@ public class SetWanSettingsHelper extends BaseHelper {
     public void setWanSettings(SetWanSettingsParam param) {
         prepareHelperNext();
         XSmart xSetWanSettings = new XSmart();
-        xSetWanSettings.xMethod(Cons.METHOD_SET_WAN_SETTINGS);
+        xSetWanSettings.xMethod(XCons.METHOD_SET_WAN_SETTINGS);
         xSetWanSettings.xParam(param);
         xSetWanSettings.xPost(new XNormalCallback() {
             @Override

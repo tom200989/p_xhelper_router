@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetLoginStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -41,7 +41,7 @@ public class LogoutHelper extends BaseHelper {
      */
     private void toLogout() {
         XSmart xLogout = new XSmart();
-        xLogout.xMethod(Cons.METHOD_LOGOUT).xPost(new XNormalCallback() {
+        xLogout.xMethod(XCons.METHOD_LOGOUT).xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {
                 // 再获取登陆状态 -- 确保已经登出

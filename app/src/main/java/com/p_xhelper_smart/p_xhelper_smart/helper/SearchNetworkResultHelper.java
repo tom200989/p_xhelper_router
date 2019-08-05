@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SearchNetworkResultBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -17,7 +17,7 @@ public class SearchNetworkResultHelper extends BaseHelper {
     public void searchNetworkResult() {
         prepareHelperNext();
         XSmart<SearchNetworkResultBean> xSearch = new XSmart<>();
-        xSearch.xMethod(Cons.METHOD_SEARCH_NETWORK_RESULT);
+        xSearch.xMethod(XCons.METHOD_SEARCH_NETWORK_RESULT);
         xSearch.xPost(new XNormalCallback<SearchNetworkResultBean>() {
             @Override
             public void success(SearchNetworkResultBean result) {

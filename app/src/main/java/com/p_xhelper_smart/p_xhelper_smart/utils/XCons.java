@@ -9,7 +9,7 @@ import java.util.List;
  * Created by qianli.ma on 2019/7/25 0025.
  */
 @SuppressLint("UseSparseArrays")
-public class Cons {
+public class XCons {
 
     public static String TAG = "xsmart";
 

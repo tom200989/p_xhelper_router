@@ -3,7 +3,7 @@ package com.p_xhelper_smart.p_xhelper_smart.helper;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -17,7 +17,7 @@ public class DisConnectHelper extends BaseHelper {
     public void disconnect() {
         prepareHelperNext();
         XSmart xDisconnect = new XSmart();
-        xDisconnect.xMethod(Cons.METHOD_DISCONNECT);
+        xDisconnect.xMethod(XCons.METHOD_DISCONNECT);
         xDisconnect.xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {

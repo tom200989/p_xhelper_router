@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SaveSmsParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -14,7 +14,7 @@ public class SaveSMSHelper extends BaseHelper {
     public void saveSms(SaveSmsParam param) {
         prepareHelperNext();
         XSmart xSmart = new XSmart();
-        xSmart.xMethod(Cons.METHOD_SAVE_SMS).xParam(param).xPost(new XNormalCallback() {
+        xSmart.xMethod(XCons.METHOD_SAVE_SMS).xParam(param).xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {
                 saveSmsSuccessNext();

@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.ChangePinStateParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -21,7 +21,7 @@ public class ChangePinStateHelper extends BaseHelper {
     public void changePinState(String pin, int state) {
         prepareHelperNext();
         XSmart xChangePinState = new XSmart();
-        xChangePinState.xMethod(Cons.METHOD_CHANGE_PIN_STATE);
+        xChangePinState.xMethod(XCons.METHOD_CHANGE_PIN_STATE);
         xChangePinState.xParam(new ChangePinStateParam(pin, state));
         xChangePinState.xPost(new XNormalCallback() {
             @Override

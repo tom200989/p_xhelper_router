@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SetConnectionSettingsParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -23,7 +23,7 @@ public class SetConnectionSettingsHelper extends BaseHelper {
     public void setConnectionSettings(int connectMode, int roamingConnect, int pdpType, int connOffTime) {
         prepareHelperNext();
         XSmart xSetConnSetting = new XSmart();
-        xSetConnSetting.xMethod(Cons.METHOD_SET_CONNECTION_SETTINGS);
+        xSetConnSetting.xMethod(XCons.METHOD_SET_CONNECTION_SETTINGS);
         xSetConnSetting.xParam(new SetConnectionSettingsParam(connectMode, roamingConnect, pdpType, connOffTime));
         xSetConnSetting.xPost(new XNormalCallback() {
             @Override

@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetNetworkInfoBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/31 0031.
@@ -17,7 +17,7 @@ public class GetNetworkInfoHelper extends BaseHelper {
     public void getNetworkInfo() {
         prepareHelperNext();
         XSmart<GetNetworkInfoBean> xNetworkInfo = new XSmart<>();
-        xNetworkInfo.xMethod(Cons.METHOD_GET_NETWORK_INFO);
+        xNetworkInfo.xMethod(XCons.METHOD_GET_NETWORK_INFO);
         xNetworkInfo.xPost(new XNormalCallback<GetNetworkInfoBean>() {
             @Override
             public void success(GetNetworkInfoBean result) {

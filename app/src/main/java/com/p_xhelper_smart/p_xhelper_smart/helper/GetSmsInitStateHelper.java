@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSmsInitStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -17,7 +17,7 @@ public class GetSmsInitStateHelper extends BaseHelper {
     public void getSmsInitState() {
         prepareHelperNext();
         XSmart<GetSmsInitStateBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_SMS_INIT_STATE).xPost(new XNormalCallback<GetSmsInitStateBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_SMS_INIT_STATE).xPost(new XNormalCallback<GetSmsInitStateBean>() {
             @Override
             public void success(GetSmsInitStateBean result) {
                 getSmsInitStateSuccessNext(result);

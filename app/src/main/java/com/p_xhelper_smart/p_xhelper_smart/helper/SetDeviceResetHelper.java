@@ -3,7 +3,7 @@ package com.p_xhelper_smart.p_xhelper_smart.helper;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/31 0031.
@@ -17,7 +17,7 @@ public class SetDeviceResetHelper extends BaseHelper {
     public void SetDeviceReset() {
         prepareHelperNext();
         XSmart xDeviceReset = new XSmart();
-        xDeviceReset.xMethod(Cons.METHOD_SET_DEVICE_RESET);
+        xDeviceReset.xMethod(XCons.METHOD_SET_DEVICE_RESET);
         xDeviceReset.xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {

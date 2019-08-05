@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetNetworkRegisterStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -17,7 +17,7 @@ public class GetNetworkRegisterStateHelper extends BaseHelper {
     public void getNetworkRegisterState() {
         prepareHelperNext();
         XSmart<GetNetworkRegisterStateBean> xRegister = new XSmart<>();
-        xRegister.xMethod(Cons.METHOD_GET_NETWORK_REGISTER_STATE);
+        xRegister.xMethod(XCons.METHOD_GET_NETWORK_REGISTER_STATE);
         xRegister.xPost(new XNormalCallback<GetNetworkRegisterStateBean>() {
             @Override
             public void success(GetNetworkRegisterStateBean result) {

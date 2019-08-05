@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSystemStatusBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/31 0031.
@@ -17,7 +17,7 @@ public class GetSystemStatusHelper extends BaseHelper {
     public void getSystemStatus() {
         prepareHelperNext();
         XSmart<GetSystemStatusBean> xSystemStatus = new XSmart<>();
-        xSystemStatus.xMethod(Cons.METHOD_GET_SYSTEM_STATUS);
+        xSystemStatus.xMethod(XCons.METHOD_GET_SYSTEM_STATUS);
         xSystemStatus.xPost(new XNormalCallback<GetSystemStatusBean>() {
             @Override
             public void success(GetSystemStatusBean result) {

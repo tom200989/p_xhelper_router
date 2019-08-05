@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SetNetworkSettingsParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/31 0031.
@@ -20,7 +20,7 @@ public class SetNetworkSettingsHelper extends BaseHelper {
     public void setNetworkSettings(SetNetworkSettingsParam param) {
         prepareHelperNext();
         XSmart xSetNetworkSetting = new XSmart();
-        xSetNetworkSetting.xMethod(Cons.METHOD_SET_NETWORK_SETTINGS);
+        xSetNetworkSetting.xMethod(XCons.METHOD_SET_NETWORK_SETTINGS);
         xSetNetworkSetting.xParam(param);
         xSetNetworkSetting.xPost(new XNormalCallback() {
             @Override

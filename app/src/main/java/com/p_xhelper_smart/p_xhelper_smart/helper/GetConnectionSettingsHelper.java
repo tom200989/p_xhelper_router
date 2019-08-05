@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetConnectionSettingsBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -17,7 +17,7 @@ public class GetConnectionSettingsHelper extends BaseHelper {
     public void getConnectionSettings() {
         prepareHelperNext();
         XSmart<GetConnectionSettingsBean> xConnSetting = new XSmart<>();
-        xConnSetting.xMethod(Cons.METHOD_GET_CONNECTION_SETTINGS);
+        xConnSetting.xMethod(XCons.METHOD_GET_CONNECTION_SETTINGS);
         xConnSetting.xPost(new XNormalCallback<GetConnectionSettingsBean>() {
             @Override
             public void success(GetConnectionSettingsBean result) {

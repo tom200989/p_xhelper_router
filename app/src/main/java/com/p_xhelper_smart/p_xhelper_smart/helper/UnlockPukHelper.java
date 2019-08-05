@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.UnlockPukParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -21,7 +21,7 @@ public class UnlockPukHelper extends BaseHelper {
     public void unlockPuk(String puk, String pin) {
         prepareHelperNext();
         XSmart xPuk = new XSmart();
-        xPuk.xMethod(Cons.METHOD_UNLOCK_PUK);
+        xPuk.xMethod(XCons.METHOD_UNLOCK_PUK);
         xPuk.xParam(new UnlockPukParam(puk, pin));
         xPuk.xPost(new XNormalCallback() {
             @Override

@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.ChangePinCodeParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -15,7 +15,7 @@ public class ChangePinCodeHelper extends BaseHelper {
     public void changePinCode(String newPin, String currentPin) {
         prepareHelperNext();
         XSmart xChangePin = new XSmart();
-        xChangePin.xMethod(Cons.METHOD_CHANGE_PIN_CODE);
+        xChangePin.xMethod(XCons.METHOD_CHANGE_PIN_CODE);
         xChangePin.xParam(new ChangePinCodeParam(newPin, currentPin));
         xChangePin.xPost(new XNormalCallback() {
             @Override

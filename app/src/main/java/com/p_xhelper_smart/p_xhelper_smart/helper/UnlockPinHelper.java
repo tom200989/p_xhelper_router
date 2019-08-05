@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.UnlockPinParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -20,7 +20,7 @@ public class UnlockPinHelper extends BaseHelper {
     public void unlockPin(String pin) {
         prepareHelperNext();
         XSmart xPin = new XSmart();
-        xPin.xMethod(Cons.METHOD_UNLOCK_PIN);
+        xPin.xMethod(XCons.METHOD_UNLOCK_PIN);
         xPin.xParam(new UnlockPinParam(pin));
         xPin.xPost(new XNormalCallback() {
             @Override

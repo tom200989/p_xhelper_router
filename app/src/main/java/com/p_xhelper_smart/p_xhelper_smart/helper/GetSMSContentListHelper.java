@@ -5,7 +5,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSmsContentListParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -18,7 +18,7 @@ public class GetSMSContentListHelper extends BaseHelper {
     public void getSMSContentList(GetSmsContentListParam param) {
         prepareHelperNext();
         XSmart<GetSMSContentListBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_SMS_CONTENT_LIST).xParam(param).xPost(new XNormalCallback<GetSMSContentListBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_SMS_CONTENT_LIST).xParam(param).xPost(new XNormalCallback<GetSMSContentListBean>() {
             @Override
             public void success(GetSMSContentListBean result) {
                 getSmsContentListSuccessNext(result);

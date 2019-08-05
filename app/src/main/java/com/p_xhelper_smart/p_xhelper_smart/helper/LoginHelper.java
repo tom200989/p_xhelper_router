@@ -8,7 +8,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSystemInfoBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 import com.p_xhelper_smart.p_xhelper_smart.utils.EncryptUtils;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
@@ -19,7 +19,7 @@ import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
 @SuppressWarnings("unchecked")
 public class LoginHelper extends BaseHelper {
 
-    private String account = Cons.ACCOUNT;
+    private String account = XCons.ACCOUNT;
     private String password;
     private int count = 0;
     private int devType;// 设备类型
@@ -51,7 +51,7 @@ public class LoginHelper extends BaseHelper {
             this.getSystemInfoBean = getSystemInfobean;
             devType = SmartUtils.getDEVType(getSystemInfobean.getDeviceName());
             // 1.判断是否为E1版本
-            if (devType == Cons.ENCRYPT_DEV_TARGET) {
+            if (devType == XCons.ENCRYPT_DEV_TARGET) {
                 // 1.1.E1版本必须加密
                 encryptAccAndPsd(true);
             } else {
@@ -66,7 +66,7 @@ public class LoginHelper extends BaseHelper {
         });
 
         systemInfoHelper.setOnAppErrorListener(() -> {
-            Logg.t(Cons.TAG).ee("systemInfoHelper app error");
+            Logg.t(XCons.TAG).ee("systemInfoHelper app error");
             loginFailedNext();
             doneHelperNext();
         });
@@ -89,7 +89,7 @@ public class LoginHelper extends BaseHelper {
         });
 
         loginStateHelper.setOnGetLoginStateFailedListener(() -> {
-            Logg.t(Cons.TAG).ee("loginStateHelper app error");
+            Logg.t(XCons.TAG).ee("loginStateHelper app error");
             loginFailedNext();
             doneHelperNext();
         });
@@ -103,7 +103,7 @@ public class LoginHelper extends BaseHelper {
     private void reqLogin() {
         XSmart<LoginBean> xLogin = new XSmart<>();
         xLogin.xParam(new LoginParam(account, password));
-        xLogin.xMethod(Cons.METHOD_LOGIN).xPost(new XNormalCallback<LoginBean>() {
+        xLogin.xMethod(XCons.METHOD_LOGIN).xPost(new XNormalCallback<LoginBean>() {
             @Override
             public void success(LoginBean loginBean) {
                 isStateLogin(loginBean);// 查询登陆状态是否已经更改为［已登录］
@@ -111,13 +111,13 @@ public class LoginHelper extends BaseHelper {
 
             @Override
             public void appError(Throwable ex) {
-                Logg.t(Cons.TAG).ee("reqLogin app error");
+                Logg.t(XCons.TAG).ee("reqLogin app error");
                 loginFailed();
             }
 
             @Override
             public void fwError(FwError fwError) {
-                Logg.t(Cons.TAG).ee("reqLogin fwError :" + fwError.getCode());
+                Logg.t(XCons.TAG).ee("reqLogin fwError :" + fwError.getCode());
                 loginFailed();
             }
 
@@ -154,7 +154,7 @@ public class LoginHelper extends BaseHelper {
                         e.printStackTrace();
                     }
                 } else {
-                    Logg.t(Cons.TAG).ee("isStateLogin count > 5 error");
+                    Logg.t(XCons.TAG).ee("isStateLogin count > 5 error");
                     loginFailed();
                 }
 
@@ -204,7 +204,7 @@ public class LoginHelper extends BaseHelper {
         if (isEncrypt) {
             if (getSystemInfoBean != null) {
                 // 如果不是［新设备］-- 采用普通算法加密
-                if (devType != Cons.ENCRYPT_DEV_2019) {
+                if (devType != XCons.ENCRYPT_DEV_2019) {
                     password = EncryptUtils.encryptAdmin(password);
                 } else {// 如果是［新设备］-- 采用MD5加密
                     password = Md5Code.encryption(password).toLowerCase();

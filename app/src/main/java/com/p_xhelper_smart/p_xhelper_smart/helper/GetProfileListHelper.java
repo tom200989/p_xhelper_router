@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetProfileListBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -14,7 +14,7 @@ public class GetProfileListHelper extends BaseHelper {
     public void getProfileList() {
         prepareHelperNext();
         XSmart<GetProfileListBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_PROFILE_LIST).xPost(new XNormalCallback<GetProfileListBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_PROFILE_LIST).xPost(new XNormalCallback<GetProfileListBean>() {
             @Override
             public void success(GetProfileListBean result) {
                 getProfileListSuccessNext(result);

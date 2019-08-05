@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SetWlanSettingsParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/31 0031.
@@ -20,7 +20,7 @@ public class SetWlanSettingsHelper extends BaseHelper {
     public void setWlanSettings(SetWlanSettingsParam param) {
         prepareHelperNext();
         XSmart xWlanSetting = new XSmart();
-        xWlanSetting.xMethod(Cons.METHOD_SET_WLAN_SETTINGS);
+        xWlanSetting.xMethod(XCons.METHOD_SET_WLAN_SETTINGS);
         xWlanSetting.xParam(param);
         xWlanSetting.xPost(new XNormalCallback() {
             @Override

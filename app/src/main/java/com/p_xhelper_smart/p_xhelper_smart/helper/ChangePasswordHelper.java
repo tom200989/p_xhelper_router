@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.ChangePasswordParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -21,8 +21,8 @@ public class ChangePasswordHelper extends BaseHelper {
     public void changePassword(String CurrPassword, String newPassword) {
         prepareHelperNext();
         XSmart xChange = new XSmart();
-        xChange.xMethod(Cons.METHOD_CHANGE_PASSWORD);
-        xChange.xParam(new ChangePasswordParam(Cons.ACCOUNT, CurrPassword, newPassword));
+        xChange.xMethod(XCons.METHOD_CHANGE_PASSWORD);
+        xChange.xParam(new ChangePasswordParam(XCons.ACCOUNT, CurrPassword, newPassword));
         xChange.xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {

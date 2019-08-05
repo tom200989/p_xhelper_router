@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetLanSettingsBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/8/1 0001.
@@ -17,7 +17,7 @@ public class GetLanSettingsHelper extends BaseHelper {
     public void getLanSettings() {
         prepareHelperNext();
         XSmart<GetLanSettingsBean> xGetLanSetting = new XSmart<>();
-        xGetLanSetting.xMethod(Cons.METHOD_GET_LAN_SETTINGS);
+        xGetLanSetting.xMethod(XCons.METHOD_GET_LAN_SETTINGS);
         xGetLanSetting.xPost(new XNormalCallback<GetLanSettingsBean>() {
             @Override
             public void success(GetLanSettingsBean result) {

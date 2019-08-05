@@ -13,7 +13,7 @@ import com.p_xhelper_smart.p_xhelper_smart.impl.XBackupCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XRequstBody;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XResponceBody;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 import com.p_xhelper_smart.p_xhelper_smart.utils.HostnameUtils;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 import com.p_xhelper_smart.p_xhelper_smart.utils.SmartUtils;
@@ -109,7 +109,7 @@ public class XSmart<T> {
     private int MAX_COUNT = 9;// 最大请求次数
 
     public XSmart() {
-        lgg = Logg.t(Cons.TAG).openClose(PRINT_TAG);
+        lgg = Logg.t(XCons.TAG).openClose(PRINT_TAG);
     }
 
     /**

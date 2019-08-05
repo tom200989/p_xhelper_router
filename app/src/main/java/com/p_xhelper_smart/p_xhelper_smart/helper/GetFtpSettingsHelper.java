@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetFtpSettingsBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/8/1 0001.
@@ -17,7 +17,7 @@ public class GetFtpSettingsHelper extends BaseHelper {
     public void getFtpSettings() {
         prepareHelperNext();
         XSmart<GetFtpSettingsBean> xGetFtpSettings = new XSmart<>();
-        xGetFtpSettings.xMethod(Cons.METHOD_GET_FTP_SETTINGS);
+        xGetFtpSettings.xMethod(XCons.METHOD_GET_FTP_SETTINGS);
         xGetFtpSettings.xPost(new XNormalCallback<GetFtpSettingsBean>() {
             @Override
             public void success(GetFtpSettingsBean result) {

@@ -5,7 +5,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSmsContactListParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -19,7 +19,7 @@ public class GetSMSContactListHelper extends BaseHelper {
         prepareHelperNext();
         GetSmsContactListParam param = new GetSmsContactListParam(page);
         XSmart<GetSMSContactListBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_SMS_CONTACT_LIST).xParam(param).xPost(new XNormalCallback<GetSMSContactListBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_SMS_CONTACT_LIST).xParam(param).xPost(new XNormalCallback<GetSMSContactListBean>() {
             @Override
             public void success(GetSMSContactListBean result) {
                 getSmsContactListSuccessNext(result);

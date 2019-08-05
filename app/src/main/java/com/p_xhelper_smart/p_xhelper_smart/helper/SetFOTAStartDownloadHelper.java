@@ -3,7 +3,7 @@ package com.p_xhelper_smart.p_xhelper_smart.helper;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/8/1 0001.
@@ -17,7 +17,7 @@ public class SetFOTAStartDownloadHelper extends BaseHelper {
     public void setFOTAStartDownload() {
         prepareHelperNext();
         XSmart xSetFOTAStartDown = new XSmart();
-        xSetFOTAStartDown.xMethod(Cons.METHOD_SET_FOTA_START_DOWNLOAD);
+        xSetFOTAStartDown.xMethod(XCons.METHOD_SET_FOTA_START_DOWNLOAD);
         xSetFOTAStartDown.xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {

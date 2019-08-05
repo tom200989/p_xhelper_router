@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSMSStorageStateBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/30 0030.
@@ -17,7 +17,7 @@ public class GetSMSStorageStateHelper extends BaseHelper {
     public void getSMSStorageState() {
         prepareHelperNext();
         XSmart<GetSMSStorageStateBean> xSmsStore = new XSmart<>();
-        xSmsStore.xMethod(Cons.METHOD_GET_SMS_STORAGE_STATE);
+        xSmsStore.xMethod(XCons.METHOD_GET_SMS_STORAGE_STATE);
         xSmsStore.xPost(new XNormalCallback<GetSMSStorageStateBean>() {
             @Override
             public void success(GetSMSStorageStateBean result) {

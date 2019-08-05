@@ -3,7 +3,7 @@ package com.p_xhelper_smart.p_xhelper_smart.helper;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -13,7 +13,7 @@ public class SearchHotspotHelper extends BaseHelper {
     public void searchHotSpot() {
         prepareHelperNext();
         XSmart xSmart = new XSmart();
-        xSmart.xMethod(Cons.METHOD_SEARCH_HOTSPOT).xPost(new XNormalCallback() {
+        xSmart.xMethod(XCons.METHOD_SEARCH_HOTSPOT).xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {
                 searchHotSpotSuccessNext();

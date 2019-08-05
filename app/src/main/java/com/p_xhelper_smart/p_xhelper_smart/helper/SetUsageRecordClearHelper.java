@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.SetUsageRecordClearParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -15,7 +15,7 @@ public class SetUsageRecordClearHelper extends BaseHelper {
         prepareHelperNext();
         XSmart xSmart = new XSmart<>();
         SetUsageRecordClearParam param = new SetUsageRecordClearParam(clearTime);
-        xSmart.xMethod(Cons.METHOD_SET_USAGE_RECORD_CLEAR).xParam(param).xPost(new XNormalCallback() {
+        xSmart.xMethod(XCons.METHOD_SET_USAGE_RECORD_CLEAR).xParam(param).xPost(new XNormalCallback() {
             @Override
             public void success(Object result) {
                 setUsageRecordClearSuccessNext();

@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetBlockDeviceListBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -17,7 +17,7 @@ public class GetBlockDeviceListHelper extends BaseHelper{
     public void getBlockDeviceList() {
         prepareHelperNext();
         XSmart<GetBlockDeviceListBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_BLOCK_DEVICE_LIST).xPost(new XNormalCallback<GetBlockDeviceListBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_BLOCK_DEVICE_LIST).xPost(new XNormalCallback<GetBlockDeviceListBean>() {
             @Override
             public void success(GetBlockDeviceListBean result) {
                 getBlockDeviceListSuccessNext(result);

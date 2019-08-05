@@ -8,7 +8,7 @@ import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.helper.GetSimStatusHelper;
 import com.p_xhelper_smart.p_xhelper_smart.helper.HeartBeatHelper;
 import com.p_xhelper_smart.p_xhelper_smart.helper.LoginHelper;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 import com.p_xhelper_smart.p_xhelper_smart.utils.Logg;
 import com.p_xhelper_smart.p_xhelper_smart.utils.TimerHelper;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         loginHelper.setOnLoginOutTimeListener(() -> {
             Logg.t("ma_test_ui").ee("login out times");
         });
-        loginHelper.login(Cons.ACCOUNT, "admin");
+        loginHelper.login(XCons.ACCOUNT, "admin");
 
     }
 }

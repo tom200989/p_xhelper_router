@@ -4,7 +4,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetSystemInfoBean;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /*
  * Created by qianli.ma on 2019/7/29 0029.
@@ -17,7 +17,7 @@ public class GetSystemInfoHelper extends BaseHelper {
     public void getSystemInfo() {
         prepareHelperNext();
         XSmart<GetSystemInfoBean> xsmart = new XSmart<>();
-        xsmart.xMethod(Cons.METHOD_GET_SYSTEM_INFO).xPost(new XNormalCallback<GetSystemInfoBean>() {
+        xsmart.xMethod(XCons.METHOD_GET_SYSTEM_INFO).xPost(new XNormalCallback<GetSystemInfoBean>() {
             @Override
             public void success(GetSystemInfoBean getSystemInfoBean) {
                 getSystemInfoSuccessNext(getSystemInfoBean);

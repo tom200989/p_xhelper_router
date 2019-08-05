@@ -5,7 +5,7 @@ import com.p_xhelper_smart.p_xhelper_smart.bean.GetUsageRecordParam;
 import com.p_xhelper_smart.p_xhelper_smart.core.XSmart;
 import com.p_xhelper_smart.p_xhelper_smart.impl.FwError;
 import com.p_xhelper_smart.p_xhelper_smart.impl.XNormalCallback;
-import com.p_xhelper_smart.p_xhelper_smart.utils.Cons;
+import com.p_xhelper_smart.p_xhelper_smart.utils.XCons;
 
 /**
  * Created by wzhiqiang on 2019/7/30
@@ -16,7 +16,7 @@ public class GetUsageRecordHelper extends BaseHelper {
         prepareHelperNext();
         GetUsageRecordParam param = new GetUsageRecordParam(currentTime);
         XSmart<GetUsageRecordBean> xSmart = new XSmart<>();
-        xSmart.xMethod(Cons.METHOD_GET_USAGE_RECORD).xParam(param).xPost(new XNormalCallback<GetUsageRecordBean>() {
+        xSmart.xMethod(XCons.METHOD_GET_USAGE_RECORD).xParam(param).xPost(new XNormalCallback<GetUsageRecordBean>() {
             @Override
             public void success(GetUsageRecordBean result) {
                 getUsageRecordSuccessNext(result);
