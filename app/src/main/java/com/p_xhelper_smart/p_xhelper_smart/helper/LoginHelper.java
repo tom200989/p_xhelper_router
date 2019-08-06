@@ -118,7 +118,18 @@ public class LoginHelper extends BaseHelper {
             @Override
             public void fwError(FwError fwError) {
                 Logg.t(XCons.TAG).ee("reqLogin fwError :" + fwError.getCode());
-                loginFailed();
+                String code = fwError.getCode();
+                if (code.equals("010101")) {// 密码不正确
+                    psdNotCorrectNext();
+                } else if (code.equals("010102")) {// 其他人已登录
+                    otherUserLoginNext();
+                } else if (code.equals("010103")) {// 设备重启
+                    deviceRebootNext();
+                } else if (code.equals("010104")) {// WEBUI登录
+                    guestWebuiNext();
+                } else {// 其他异常
+                    loginFailed();
+                }
             }
 
             @Override
@@ -272,4 +283,79 @@ public class LoginHelper extends BaseHelper {
         }
     }
 
+    private OnPsdNotCorrectListener onPsdNotCorrectListener;
+
+    // Inteerface--> 接口OnPsdNotCorrectListener
+    public interface OnPsdNotCorrectListener {
+        void psdNotCorrect();
+    }
+
+    // 对外方式setOnPsdNotCorrectListener
+    public void setOnPsdNotCorrectListener(OnPsdNotCorrectListener onPsdNotCorrectListener) {
+        this.onPsdNotCorrectListener = onPsdNotCorrectListener;
+    }
+
+    // 封装方法psdNotCorrectNext
+    private void psdNotCorrectNext() {
+        if (onPsdNotCorrectListener != null) {
+            onPsdNotCorrectListener.psdNotCorrect();
+        }
+    }
+
+    private OnOtherUserLoginListener onOtherUserLoginListener;
+
+    // Inteerface--> 接口OnOtherUserLoginListener
+    public interface OnOtherUserLoginListener {
+        void otherUserLogin();
+    }
+
+    // 对外方式setOnOtherUserLoginListener
+    public void setOnOtherUserLoginListener(OnOtherUserLoginListener onOtherUserLoginListener) {
+        this.onOtherUserLoginListener = onOtherUserLoginListener;
+    }
+
+    // 封装方法otherUserLoginNext
+    private void otherUserLoginNext() {
+        if (onOtherUserLoginListener != null) {
+            onOtherUserLoginListener.otherUserLogin();
+        }
+    }
+
+    private OnDeviceRebootListener onDeviceRebootListener;
+
+    // Inteerface--> 接口OnDeviceRebootListener
+    public interface OnDeviceRebootListener {
+        void deviceReboot();
+    }
+
+    // 对外方式setOnDeviceRebootListener
+    public void setOnDeviceRebootListener(OnDeviceRebootListener onDeviceRebootListener) {
+        this.onDeviceRebootListener = onDeviceRebootListener;
+    }
+
+    // 封装方法deviceRebootNext
+    private void deviceRebootNext() {
+        if (onDeviceRebootListener != null) {
+            onDeviceRebootListener.deviceReboot();
+        }
+    }
+
+    private OnGuestWebUiListener onGuestWebUiListener;
+
+    // Inteerface--> 接口OnGuestWebUiListener
+    public interface OnGuestWebUiListener {
+        void guestWebui();
+    }
+
+    // 对外方式setOnGuestWebUiListener
+    public void setOnGuestWebUiListener(OnGuestWebUiListener onGuestWebUiListener) {
+        this.onGuestWebUiListener = onGuestWebUiListener;
+    }
+
+    // 封装方法guestWebuiNext
+    private void guestWebuiNext() {
+        if (onGuestWebUiListener != null) {
+            onGuestWebUiListener.guestWebui();
+        }
+    }
 }
